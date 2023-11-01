@@ -184,34 +184,9 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  int count = 0;
-  uint32_t previousTick = HAL_GetTick();
-  uint32_t delay = 500;
   while (1)
   {
-	  // Lấy thời điểm hiện tại
-	      uint32_t currentTick = HAL_GetTick();
-
-	      // Kiểm tra nếu đã đủ thời gian để chuyển đèn
-	      if (currentTick - previousTick >= delay) {
-	          previousTick = currentTick;
-
-	          if (count == 0) {
-	              HAL_GPIO_WritePin(red_GPIO_Port, red_Pin, SET);
-	              HAL_GPIO_WritePin(en0_GPIO_Port, en0_Pin, RESET);
-	              HAL_GPIO_WritePin(en1_GPIO_Port, en1_Pin, SET);
-	              display7SEG(1);
-	          } else {
-	              HAL_GPIO_WritePin(red_GPIO_Port, red_Pin, RESET);
-	              HAL_GPIO_WritePin(en0_GPIO_Port, en0_Pin, SET);
-	              HAL_GPIO_WritePin(en1_GPIO_Port, en1_Pin, RESET);
-	              display7SEG(2);
-	          }
-
-	          // Chuyển đèn và số
-	          count = 1 - count;
-	      }
-	}
+  }
     /* USER CODE BEGIN 3 */
 
   /* USER CODE END 3 */
