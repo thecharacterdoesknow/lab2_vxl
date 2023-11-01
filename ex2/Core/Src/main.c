@@ -177,7 +177,6 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-  HAL_TIM_Base_Start_IT(&htim3);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -185,8 +184,8 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    /* USER CODE BEGIN 3 */
   }
+    /* USER CODE BEGIN 3 */
   /* USER CODE END 3 */
 }
 
@@ -268,6 +267,47 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 int count = 0;
+void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef * htim ){
+	if (count == 0){
+		HAL_GPIO_WritePin(led_red_GPIO_Port, led_red_Pin, RESET);
+		HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, RESET);
+		HAL_GPIO_WritePin(en0_GPIO_Port, en0_Pin, RESET);
+		HAL_GPIO_WritePin(en1_GPIO_Port, en1_Pin, SET);
+		HAL_GPIO_WritePin(en2_GPIO_Port, en2_Pin, SET);
+		HAL_GPIO_WritePin(en3_GPIO_Port, en3_Pin, SET);
+		display7SEG(1);
+	}
+	if (count == 50){
+		HAL_GPIO_WritePin(led_red_GPIO_Port, led_red_Pin, SET);
+		HAL_GPIO_WritePin(en0_GPIO_Port, en0_Pin, SET);
+		HAL_GPIO_WritePin(en1_GPIO_Port, en1_Pin, RESET);
+		HAL_GPIO_WritePin(en2_GPIO_Port, en2_Pin, SET);
+		HAL_GPIO_WritePin(en3_GPIO_Port, en3_Pin, SET);
+		display7SEG(2);
+	}
+	if (count == 100){
+		HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, SET);
+		HAL_GPIO_WritePin(led_red_GPIO_Port, led_red_Pin, RESET);
+		HAL_GPIO_WritePin(en0_GPIO_Port, en0_Pin, SET);
+		HAL_GPIO_WritePin(en1_GPIO_Port, en1_Pin, SET);
+		HAL_GPIO_WritePin(en2_GPIO_Port, en2_Pin, RESET);
+		HAL_GPIO_WritePin(en3_GPIO_Port, en3_Pin, SET);
+		display7SEG(3);
+	}
+	if (count == 150){
+		HAL_GPIO_WritePin(led_red_GPIO_Port, led_red_Pin, SET);
+		HAL_GPIO_WritePin(en0_GPIO_Port, en0_Pin, SET);
+		HAL_GPIO_WritePin(en1_GPIO_Port, en1_Pin, SET);
+		HAL_GPIO_WritePin(en2_GPIO_Port, en2_Pin, SET);
+		HAL_GPIO_WritePin(en3_GPIO_Port, en3_Pin, RESET);
+		display7SEG(0);
+	}
+	if (count >= 199){
+		count = -1;
+	}
+
+	count++;
+}
 
 /* USER CODE END 4 */
 
